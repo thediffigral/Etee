@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff4f7">
+<title>Etee × Papu 💗</title>
+<style>
+:root{--pink:#ff5c8a;--ink:#382431;--muted:#8c7380;--cream:#fff8f6}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;display:grid;place-items:center;padding:22px;overflow:hidden;color:var(--ink);font-family:ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif;background:radial-gradient(circle at 12% 15%,#ffe0eb,transparent 30%),radial-gradient(circle at 90% 85%,#ffe8d8,transparent 30%),var(--cream)}
+.decor{position:fixed;inset:0;pointer-events:none;overflow:hidden;color:#ff8bab}
+.decor span{position:absolute;opacity:.5;animation:float 5s ease-in-out infinite}.decor span:nth-child(1){left:8%;top:17%;font-size:35px}.decor span:nth-child(2){right:12%;top:22%;font-size:25px;animation-delay:-2s}.decor span:nth-child(3){left:15%;bottom:14%;font-size:25px;animation-delay:-1s}.decor span:nth-child(4){right:9%;bottom:15%;font-size:37px;animation-delay:-3s}
+@keyframes float{50%{transform:translateY(-13px) rotate(9deg)}}
+.card{position:relative;width:min(100%,520px);padding:clamp(28px,7vw,48px) clamp(18px,6vw,40px);text-align:center;border:1px solid #ffcfdd;background:#ffffffdf;backdrop-filter:blur(12px);border-radius:30px;box-shadow:0 24px 80px #8230501f}
+.badge{display:inline-block;padding:8px 13px;border-radius:999px;background:#fff0f4;color:#c13c68;font-size:11px;font-weight:850;letter-spacing:.12em;text-transform:uppercase}
+.heart{display:grid;place-items:center;margin:22px auto 14px;width:76px;height:76px;border-radius:24px;background:linear-gradient(145deg,#ffa4bd,#ff5c8a);box-shadow:0 12px 25px #ff5c8a40;font-size:38px;transform:rotate(-5deg)}
+h1{margin:12px 0 10px;font-size:clamp(32px,7vw,43px);letter-spacing:-.045em;line-height:1.1}
+.subtitle{margin:0 auto;max-width:340px;color:var(--muted);font-size:14px;line-height:1.6}
+.question{margin:25px 0 21px;font-size:clamp(20px,4.8vw,24px);font-weight:850;line-height:1.35}
+.arena{position:relative;display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;min-height:62px}
+button{appearance:none;border:0;border-radius:14px;padding:15px 19px;min-height:52px;font:800 14px system-ui,sans-serif;cursor:pointer;touch-action:manipulation;transition:transform .18s,background .18s,box-shadow .18s}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
+.primary{color:white;background:var(--pink);box-shadow:0 8px 18px #ff5c8a40}.primary:hover{background:#e83e73;transform:translateY(-2px)}
+.secondary{color:#5d4752;background:#f5edf0}.secondary:hover{background:#efe1e7}
+.hint{min-height:22px;margin:17px 0 0;font-size:12px;color:#a18a95}
+.hidden{display:none!important}
+.finale{margin-top:19px;color:#d63d70;font-size:17px;font-weight:850;animation:pop .35s ease both}
+@keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+.footer{margin-top:26px;color:#b39ca7;font-size:10px;letter-spacing:.07em}
+@media(max-width:400px){.card{padding:28px 16px}.arena{gap:8px}button{padding:14px 15px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="decor" aria-hidden="true"><span>♡</span><span>✦</span><span>♥</span><span>♡</span></div>
+<main class="card">
+<div class="badge">✦ a very serious investigation ✦</div>
+<div class="heart" aria-hidden="true">💗</div>
+<h1>Etee × Papu</h1>
+<p class="subtitle">There is one very important question that needs an honest answer.</p>
+<section id="first">
+<p class="question">Does Etee hate papu? 👀</p>
+<div class="arena" id="arena">
+<button class="primary" id="runaway" type="button">Fuck yes 😈</button>
+<button class="secondary" id="no" type="button">No 💗</button>
+</div>
+<p class="hint" id="hint" aria-live="polite">Go on, try to answer honestly…</p>
+</section>
+<section id="second" class="hidden">
+<p class="question">I think Etee loves papu 🥹💖</p>
+<div class="arena">
+<button class="secondary" id="deny" type="button">Absolutely no 🙄</button>
+<button class="primary" id="yes" type="button">Yes 💘</button>
+</div>
+<p class="hint" id="hint2" aria-live="polite">Choose wisely. There is only one correct answer.</p>
+</section>
+<div id="finale" class="finale hidden" role="status">CASE CLOSED: ETEE LOVES PAPU. 💞</div>
+<div class="footer">MADE WITH 💗, FOR SCIENTIFIC PURPOSES</div>
+</main>
+<script>
+(()=> {
+const runaway=document.querySelector('#runaway'), first=document.querySelector('#first'), second=document.querySelector('#second');
+let attempts=0, finished=false;
+function showSecond(){first.classList.add('hidden');second.classList.remove('hidden');runaway.style.position='';runaway.style.left='';runaway.style.top=''}
+function dodge(e){
+ if(!second.classList.contains('hidden'))return;
+ if(e)e.preventDefault();
+ attempts++;
+ const r=runaway.getBoundingClientRect(), pad=12;
+ const maxX=Math.max(pad,innerWidth-r.width-pad),maxY=Math.max(pad,innerHeight-r.height-pad);
+ runaway.style.position='fixed';runaway.style.zIndex='20';
+ runaway.style.left=(pad+Math.random()*Math.max(0,maxX-pad))+'px';
+ runaway.style.top=(pad+Math.random()*Math.max(0,maxY-pad))+'px';
+ document.querySelector('#hint').textContent=attempts<3?['Nope! Too slow 😜','Catch me if you can! 💨','Okay, enough games… 💌'][attempts-1]:'One more important question… 💌';
+ if(attempts>=3)setTimeout(showSecond,400);
+}
+runaway.addEventListener('pointerenter',dodge);
+runaway.addEventListener('click',dodge);
+runaway.addEventListener('touchstart',dodge,{passive:false});
+document.querySelector('#no').addEventListener('click',showSecond);
+function confirmLove(){
+ if(finished)return;finished=true;
+ const deny=document.querySelector('#deny'),yes=document.querySelector('#yes');
+ deny.textContent='Yes, Etee loves papu 💖';deny.className='primary';
+ yes.textContent='YES!! 💘';
+ document.querySelector('#hint2').textContent='We knew you would come around. 🥰';
+ document.querySelector('#finale').classList.remove('hidden');
+ deny.disabled=true;yes.disabled=true;
+}
+document.querySelector('#deny').addEventListener('click',()=>{
+ document.querySelector('#deny').textContent='Yes, Etee loves papu 💖';
+ document.querySelector('#hint2').textContent='Nice try. The answer is YES. 💗';
+ setTimeout(confirmLove,400);
+});
+document.querySelector('#yes').addEventListener('click',confirmLove);
+})();
+</script>
+</body>
+</html>
